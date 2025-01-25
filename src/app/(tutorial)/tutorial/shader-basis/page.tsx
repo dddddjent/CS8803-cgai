@@ -6,6 +6,7 @@ import * as THREE from 'three';
 
 import vertexShader from '@/shaders/common/vertex.glsl';
 import fragmentShader from './fragment.glsl';
+import useDevicePixelRatio from '@/hooks/useDevicePixelRatio';
 
 const Mesh = ({ dpr }: { dpr: number }) => {
   const { viewport } = useThree();
@@ -34,7 +35,7 @@ const Mesh = ({ dpr }: { dpr: number }) => {
 };
 
 export default function TestPage() {
-  const dpr = 1;
+  const dpr = useDevicePixelRatio();
   return (
     <Canvas
       orthographic

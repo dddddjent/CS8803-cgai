@@ -11,6 +11,7 @@
 //
 // and iquilezles.org/articles/distfunctions2d
 
+uniform float iTime;
 uniform vec2 iResolution;
 uniform vec2 iMouse;
 
@@ -19,12 +20,28 @@ float sdf_circle(vec2 p, vec2 c, float r)
     return length(p - c) - r;
 }
 
+// reference: https://iquilezles.org/articles/distfunctions2d/, Box-exact
+float sdf_box( in vec2 p, float angle, in vec2 b )
+{
+    mat2 rot = mat2(cos(-angle), sin(-angle), -sin(-angle), cos(-angle));
+    p = rot * p;
+
+    vec2 d = abs(p)-b;
+    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
+}
+
 void mainImage(out vec4 fragColor, in vec2 fragCoord)
 {
     vec2 p = (2.0 * fragCoord - iResolution.xy) / iResolution.y;    // p's range is between (-aspect_ratio,-1) to (+aspect_ratio,+1)
     vec2 c = vec2(0.0, 0.0);
     float r = 0.2;
-    float d = sdf_circle(p, c, r);
+    
+    // circle
+    // float d = sdf_circle(p, c, r);
+
+    // // rotating box
+    vec2 b = vec2(0.2, 0.3);
+    float d = sdf_box(p, iTime, b);
 
     // our coloring implementation
     vec3 color = vec3(0.0, 0.0, 0.0);

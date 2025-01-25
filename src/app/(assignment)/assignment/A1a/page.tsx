@@ -6,9 +6,11 @@ import * as THREE from 'three';
 
 import vertexShader from '@/shaders/common/vertex.glsl';
 import fragmentShader from './fragment.glsl';
+import useDevicePixelRatio from '@/hooks/useDevicePixelRatio';
 
-const HW1 = ({ dpr }: { dpr: number }) => {
-    const { viewport, pointer } = useThree();
+const Test = () => {
+    const { viewport } = useThree();
+    const dpr = useDevicePixelRatio();
     const uniforms = useRef({
         uTime: { value: 0 },
         uResolution: {
@@ -69,7 +71,6 @@ const HW1 = ({ dpr }: { dpr: number }) => {
         uniforms.uTime.value += delta;
         uniforms.uResolution.value.set(window.innerWidth * dpr, window.innerHeight * dpr);
         uniforms.uFrame.value += 1;
-        uniforms.uMouse.value.set(pointer.x, pointer.y);
         uniforms.uLightTheta.value += delta;
         uniforms.uLightRotationMat.value.makeRotationFromEuler(new THREE.Euler(0, uniforms.uLightTheta.value, 0));
     });
@@ -87,11 +88,11 @@ const HW1 = ({ dpr }: { dpr: number }) => {
 };
 
 export default function TestPage() {
-    const dpr = 1;
+    const dpr = useDevicePixelRatio();
     return (
         <Canvas
             orthographic
-            dpr={dpr}
+            // dpr={1}
             camera={{ position: [0, 0, 6] }}
             style={{
                 position: 'fixed',
@@ -102,7 +103,7 @@ export default function TestPage() {
             }}
         >
             <Suspense fallback={null}>
-                <HW1 dpr={dpr} />
+                <Test />
             </Suspense>
         </Canvas>
     );

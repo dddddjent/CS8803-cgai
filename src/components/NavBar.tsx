@@ -27,39 +27,24 @@ const tutorials: { title: string; href: string; description: string }[] = [
     href: '/tutorial/sdf-basis',
     description: 'Simple 2D SDF shader',
   },
-  {
-    title: 'More...',
-    href: '#',
-    description: 'Comming soon',
-  },
 ];
 
 const assignments: { title: string; href: string; description: string }[] = [
   {
-    title: 'Assignment 1',
-    href: '/assignment/a1',
-    description: 'Implicit surfaces and Ray Marching',
+    title: 'Assignment 1A Demo',
+    href: '/assignment/A1a',
+    description: 'A1a Demo: SDF and Ray Marching',
   },
   {
-    title: 'Assignment 2',
-    href: '/assignment/a2',
-    description: 'Comming soon',
-  },
-  {
-    title: 'Assignment 3',
-    href: '/assignment/a3',
-    description: 'Comming soon',
-  },
-  {
-    title: 'Assignment 4',
-    href: '/assignment/a4',
-    description: 'Comming soon',
+    title: 'Assignment 1A Doc',
+    href: '/assignment/A1a_doc',
+    description: 'A1a Document: SDF and Ray Marching',
   },
 ];
 
 const shaderToys: { title: string; href: string; description: string }[] = [
   {
-    title: 'Raymarching - Primitives ',
+    title: 'Raymarching - Primitives',
     href: 'https://www.shadertoy.com/view/Xds3zN',
     description: 'A set of raymarched primitives by Inigo Quilez',
   },

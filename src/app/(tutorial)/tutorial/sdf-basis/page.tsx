@@ -4,13 +4,12 @@ import { Suspense, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
-
 import vertexShader from '@/shaders/common/vertex.glsl';
 import fragmentShader from './fragment.glsl';
+import useDevicePixelRatio from '@/hooks/useDevicePixelRatio';
 
-const Test = () => {
+const Test = ({ dpr }: { dpr: number }) => {
   const { viewport, mouse } = useThree();
-  const dpr = 1;
   const uniforms = useRef({
     iTime: { value: 0 },
     iResolution: {
@@ -38,10 +37,11 @@ const Test = () => {
 };
 
 export default function TestPage() {
+  const dpr = useDevicePixelRatio();
   return (
     <Canvas
       orthographic
-      // dpr={1}
+      dpr={dpr}
       camera={{ position: [0, 0, 6] }}
       style={{
         position: 'fixed',
@@ -52,7 +52,7 @@ export default function TestPage() {
       }}
     >
       <Suspense fallback={null}>
-        <Test />
+        <Test dpr={dpr} />
       </Suspense>
     </Canvas>
   );

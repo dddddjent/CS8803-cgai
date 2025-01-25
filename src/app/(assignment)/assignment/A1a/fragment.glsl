@@ -1,8 +1,15 @@
+/////////////////////////////////////////////////////
+//// CS 8803/4803 CGAI: Computer Graphics in AI Era
+//// Assignment 1A: SDF and Ray Marching
+/////////////////////////////////////////////////////
+
+precision
+highp float; //// set default precision of float variables to high precision
+
 varying vec2 vUv;
 
 uniform float uTime;
 uniform vec2 uResolution;
-uniform vec2 uMouse;
 uniform mat4 uLightRotationMat;
 uniform mat4 larmTransform;
 uniform mat4 rarmTransform;
@@ -245,7 +252,7 @@ vec3 toneRemap(vec3 color) {
 void main() {
     vec3 bgColor = srgbToLinear(vec3(0.5, 0.7, 1.0));
 
-    int sampleCnt = 5;
+    int sampleCnt = 1;
     vec2 samplePos = vec2(random(vUv.x), random(vUv.y));
     vec3 color = vec3(0.0);
     for (int i = 0; i < sampleCnt; i++) {

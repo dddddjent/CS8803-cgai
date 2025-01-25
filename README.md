@@ -132,7 +132,7 @@ After installing node.js and npm, we are ready to download the source code and s
    ```
 
 4. Open your browser and go to: `http://localhost:3000` (The port number may change due to your local machine. You may also choose to click the URL in your command line. You should see the class landing page).
-   ![Alt text](/public/class_landing_page.png?raw=true "Class Landing Page")
+   ![image](https://github.com/user-attachments/assets/d741e304-5bc9-4aa9-9830-1bf60c9114a2)
 
 5. After you have completed the assignment, for example, Assignment 1, you can click on the link named `Assignment 1` under the `Assignments` section. Or, You can just go to `http://localhost:3000/assignment/a1` to see the result of the assignment.
 
