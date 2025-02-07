@@ -1,0 +1,25 @@
+[project]
+name = "cs8803-cgai"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ipykernel>=6.29.5",
+    "ipython>=8.32.0",
+    "matplotlib>=3.10.0",
+    "mesh-to-sdf>=0.0.15",
+    "numpy>=2.2.2",
+    "pyvirtualdisplay>=3.0",
+    "torch>=2.6.0",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu124", marker = "sys_platform == 'linux'" },
+]
