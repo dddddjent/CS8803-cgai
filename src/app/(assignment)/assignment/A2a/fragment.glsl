@@ -34,8 +34,8 @@ mat3 setCamera(in vec3 ro, in vec3 ta, float cr) {
 //// This function converts a scalar value t to a color
 vec3 palette(in float t) {
     vec3 a = vec3(0.5, 0.5, 0.5);
-    vec3 b = vec3(0.5, 0.5, 0.5);
-    vec3 c = vec3(1.0, 1.0, 1.0);
+    vec3 b = vec3(0.5, 0.5, 1.0);
+    vec3 c = vec3(2.0, 1.0, 0.0);
     vec3 d = vec3(0.0, 0.10, 0.20);
 
     return a + b * cos(6.28318 * (c * t + d));
@@ -98,15 +98,19 @@ vec4 readCTVolume(vec3 p) {
     //// normalize coordinates to [0, 1] range
     vec3 tex_coord = (p + vec3(1.0)) * 0.5;
     //// check if tex_coord is outside the box
-    if (tex_coord.x < 0.0 || tex_coord.x > 1.0 || tex_coord.y < 0.0 ||
-            tex_coord.y > 1.0 || tex_coord.z < 0.0 || tex_coord.z > 1.0) {
+    if (tex_coord.x < 0.01 || tex_coord.x > 0.99 || tex_coord.y < 0.01 ||
+            tex_coord.y > 0.99 || tex_coord.z < 0.01 || tex_coord.z > 0.99) {
         return vec4(0.0);
     }
 
     //// your implementation starts
 
+    ivec3 coord = ivec3(tex_coord * vec3(128, 128, 256));
+    coord.x = (coord.x + 32) % 128;
+    tex_coord.x = float(coord.x) / 128.0;
     float ct = texture(iVolume, tex_coord).r;
-    return vec4(palette(ct), ct) * 2.0;
+    // return vec4(palette(ct * 20.0), ct * 5000.0) ;
+    return vec4(palette(ct * 0.15), ct * 25.0) ;
 
     //// your implementation ends
 }
@@ -137,7 +141,8 @@ vec4 volumeRendering(vec3 ro, vec3 rd, float near, float far, int n_samples) {
         vec3 p = ro + t * rd; //// sample position on the ray
 
         //// your implementation starts
-        vec4 res1 = readSDFVolume(p);
+        // vec4 res1 = readSDFVolume(p);
+        vec4 res1 = vec4(0.0, 0.0, 0.0, 0.0);
         vec4 res2 = readCTVolume(p);
         vec3 c = (res1.rgb * res1.a + res2.rgb * res2.a) / (res1.a + res2.a + 0.001);
         color += transmittance * (1.0 - exp(-stepSize * (res1.a + res2.a))) * c;
@@ -171,7 +176,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     vec3 rd = ca * normalize(vec3(uv, 1.0)); //// ray direction
     float near = 2.0; //// near bound
     float far = 8.5; //// far bound
-    int n_samples = 256; //// number of samples along each ray
+    // int n_samples = 256; //// number of samples along each ray
+    int n_samples = 512 * 2; //// number of samples along each ray
 
     //// final output color
     fragColor = volumeRendering(ro, rd, near, far,

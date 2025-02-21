@@ -9,5 +9,7 @@ dependencies = [
     "ipykernel>=6.29.5",
     "matplotlib>=3.10.0",
     "numpy>=2.2.3",
+    "pyvista>=0.44.1",
     "tqdm>=4.67.1",
+    "vtk>=9.4.1",
 ]

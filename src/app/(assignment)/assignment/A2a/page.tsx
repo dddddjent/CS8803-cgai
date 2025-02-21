@@ -7,12 +7,13 @@ import * as THREE from 'three';
 import vertexShader from '@/shaders/common/vertex.glsl';
 import fragmentShader from './fragment.glsl';
 
-const Test = ({ dpr, volumeData }: { dpr: number; volumeData: Uint8Array | null }) => {
+const Test = ({ dpr, volumeData }: { dpr: number; volumeData: Float32Array | null }) => {
   const { viewport } = useThree();
 
-  const tex = new THREE.Data3DTexture(volumeData, 256, 256, 256);
+  // const tex = new THREE.Data3DTexture(volumeData, 256, 256, 256);
+  const tex = new THREE.Data3DTexture(volumeData, 128, 128, 256);
   tex.format = THREE.RedFormat;
-  // tex.type = THREE.FloatType;
+  tex.type = THREE.FloatType;
   tex.minFilter = THREE.LinearFilter;
   tex.magFilter = THREE.LinearFilter;
   tex.wrapS = THREE.ClampToEdgeWrapping;
@@ -48,10 +49,12 @@ const Test = ({ dpr, volumeData }: { dpr: number; volumeData: Uint8Array | null 
 };
 
 export default function TestPage() {
-  const [volumeData, setVolumeData] = useState<Uint8Array | null>(null);
+  // const [volumeData, setVolumeData] = useState<Uint8Array | null>(null);
+  const [volumeData, setVolumeData] = useState<Float32Array | null>(null);
   useEffect(() => {
     // Define the fixed path to the file
-    const fixedPath = '/foot_256x256x256_uint8.raw'; // Replace with the actual path
+    // const fixedPath = '/foot_256x256x256_uint8.raw'; // Replace with the actual path
+    const fixedPath = '/output_file.raw'; // Replace with the actual path
 
     const fetchVolumeData = async () => {
       try {
@@ -60,7 +63,8 @@ export default function TestPage() {
           throw new Error(`Failed to fetch file: ${response.statusText}`);
         }
         const data = await response.arrayBuffer();
-        const volumeArray = new Uint8Array(data);
+        // const volumeArray = new Uint8Array(data);
+        const volumeArray = new Float32Array(data);
         setVolumeData(volumeArray);
       } catch (error) {
         if (error instanceof Error) {
